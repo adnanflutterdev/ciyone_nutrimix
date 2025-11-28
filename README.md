@@ -1,16 +1,16 @@
 # ciyone_nutrimix
 
-A new Flutter project.
+Ciyone Nutrimix is an e-commerce application platform for Medical products
 
-## Getting Started
+## Technologies used
+1. Flutter & Dart
+2. Firebase for backend
 
-This project is a starting point for a Flutter application.
+## Features
+1. Email Password authentication using FirebaseAuth
+2. Stored User data and Products on FirebaseFirestore
+3. Real time updates on user data.
+4. Users can add their addresses, update their personal details.
+5. Users can add products to their carts and wish list
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
