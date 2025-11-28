@@ -23,7 +23,7 @@ class _WalletsPaymentState extends State<WalletsPayment> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isStreached = value;
             setState(() {});
@@ -114,12 +114,15 @@ class _WalletOptionsState extends State<WalletOptions> {
                   ),
                 ),
                 10.h,
-                PaymentButton(label: 'Proceed', onPressed: () {
-                      AppNavigator.pushReplacement(
-                        const OrderSuccessScreen(),
-                        pageAnimation: PageAnimation.fade,
-                      );
-                    },),
+                PaymentButton(
+                  label: 'Proceed',
+                  onPressed: () {
+                    AppNavigator.pushReplacement(
+                      const OrderSuccessScreen(),
+                      pageAnimation: PageAnimation.fade,
+                    );
+                  },
+                ),
               ],
             ),
           ),

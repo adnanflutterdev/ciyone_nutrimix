@@ -40,7 +40,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Rich Chocolate',
+        label: 'Flavour',
+        value: 'Rich Chocolate',
         images: [
           'https://img6.hkrtcdn.com/39076/prd_3907565-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Rich-Chocolate_o.jpg',
           'https://img2.hkrtcdn.com/41388/prd_4138721-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Rich-Chocolate_o.jpg',
@@ -49,7 +50,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Butter Cookie',
+        label: 'Flavour',
+        value: 'Butter Cookie',
         images: [
           'https://img2.hkrtcdn.com/41686/prd_4168521-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Butter-Cookie_o.jpg',
           'https://img10.hkrtcdn.com/41685/prd_4168469-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Butter-Cookie_o.jpg',
@@ -58,7 +60,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Kesar Thandai',
+        label: 'Flavour',
+        value: 'Kesar Thandai',
         images: [
           'https://img2.hkrtcdn.com/41684/prd_4168381-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Kesar-Thandai_o.jpg',
           'https://img6.hkrtcdn.com/41684/prd_4168335-MuscleBlaze-Biozyme-Performance-Whey-4.4-lb-Kesar-Thandai_o.jpg',
@@ -107,7 +110,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Rich Chocolate',
+        label: 'Flavour',
+        value: 'Rich Chocolate',
         images: [
           'https://img10.hkrtcdn.com/41389/prd_4138859_o.jpg',
           'https://img10.hkrtcdn.com/41387/prd_4138669-MuscleBlaze-Biozyme-Performance-Whey-2.2-lb-Rich-Chocolate_o.jpg',
@@ -116,7 +120,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Chocolate Hazelnut',
+        label: 'Flavour',
+        value: 'Chocolate Hazelnut',
         images: [
           'https://img6.hkrtcdn.com/41684/prd_4168325-MuscleBlaze-Biozyme-Performance-Whey-2.2-lb-Chocolate-Hazelnut_o.jpg',
           'https://img4.hkrtcdn.com/41684/prd_4168323-MuscleBlaze-Biozyme-Performance-Whey-2.2-lb-Chocolate-Hazelnut_o.jpg',
@@ -125,7 +130,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Magical Mango',
+        label: 'Flavour',
+        value: 'Magical Mango',
         images: [
           'https://img4.hkrtcdn.com/41684/prd_4168303-MuscleBlaze-Biozyme-Performance-Whey-2.2-lb-Magical-Mango_o.jpg',
           'https://img10.hkrtcdn.com/41684/prd_4168359-MuscleBlaze-Biozyme-Performance-Whey-2.2-lb-Magical-Mango_o.jpg',
@@ -136,7 +142,6 @@ final List<NewProductModel> newProducts = [
     ],
     varientProducts: [],
   ),
-
   //
   //
   NewProductModel(
@@ -175,7 +180,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Double Rich Chocolate',
+        label: 'Flavour',
+        value: 'Double Rich Chocolate',
         images: [
           'https://img2.hkrtcdn.com/41395/prd_4139401-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-5-lb-Double-Rich-Chocolate_o.jpg',
           'https://img8.hkrtcdn.com/41395/prd_4139407-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-5-lb-Double-Rich-Chocolate_o.jpg',
@@ -184,7 +190,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Vanilla Ice Cream',
+        label: 'Flavour',
+        value: 'Vanilla Ice Cream',
         images: [
           'https://img8.hkrtcdn.com/41394/prd_4139357-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-5-lb-Vanilla-Ice-Cream_o.jpg',
           'https://img10.hkrtcdn.com/41394/prd_4139359-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-5-lb-Vanilla-Ice-Cream_o.jpg',
@@ -195,7 +202,6 @@ final List<NewProductModel> newProducts = [
     ],
     varientProducts: [],
   ),
-
   //
   //
   NewProductModel(
@@ -233,7 +239,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Double Rich Chocolate',
+        label: 'Flavour',
+        value: 'Double Rich Chocolate',
         images: [
           'https://img6.hkrtcdn.com/41385/prd_4138435-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-1-lb-Double-Rich-Chocolate_o.jpg',
           'https://img2.hkrtcdn.com/41384/prd_4138351-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-1-lb-Double-Rich-Chocolate_o.jpg',
@@ -242,7 +249,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Vanilla Ice Cream',
+        label: 'Flavour',
+        value: 'Vanilla Ice Cream',
         images: [
           'https://img6.hkrtcdn.com/41384/prd_4138355-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-1-lb-Vanilla-Ice-Cream_o.jpg',
           'https://img6.hkrtcdn.com/41384/prd_4138365-ON-Optimum-Nutrition-Gold-Standard-100-Whey-Protein-1-lb-Vanilla-Ice-Cream_o.jpg',
@@ -286,7 +294,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Chocolate',
+        label: 'Flavour',
+        value: 'Chocolate',
         images: [
           'https://img6.hkrtcdn.com/39212/prd_3921145-MuscleBlaze-Weight-Gainer-with-Added-Digezyme-4.4-lb-Chocolate_o.jpg',
           'https://img8.hkrtcdn.com/39212/prd_3921147-MuscleBlaze-Weight-Gainer-with-Added-Digezyme-4.4-lb-Chocolate_o.jpg',
@@ -328,7 +337,8 @@ final List<NewProductModel> newProducts = [
     ],
     varientImages: [
       VarientImages(
-        title: 'Chocolate',
+        label: 'Flavour',
+        value: 'Chocolate',
         images: [
           'https://img2.hkrtcdn.com/39078/prd_3907731-MuscleBlaze-Weight-Gainer-with-Added-Digezyme-2.2-lb-Chocolate_o.jpg',
           'https://img5.hkrtcdn.com/18227/prd_1822664-MuscleBlaze-Weight-Gainer-with-Added-Digezyme-2.2-lb-Chocolate_o.jpg',
@@ -372,7 +382,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img8.hkrtcdn.com/35425/prd_3542407-HealthKart-HK-Vitals-Omega-3-1000mg-with-180mg-EPA-and-120mg-DHA-90-capsules_o.jpg',
           'https://img2.hkrtcdn.com/35425/prd_3542451-HealthKart-HK-Vitals-Omega-3-1000mg-with-180mg-EPA-and-120mg-DHA-90-capsules_o.jpg',
@@ -417,7 +428,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img8.hkrtcdn.com/35425/prd_3542407-HealthKart-HK-Vitals-Omega-3-1000mg-with-180mg-EPA-and-120mg-DHA-90-capsules_o.jpg',
           'https://img2.hkrtcdn.com/35425/prd_3542451-HealthKart-HK-Vitals-Omega-3-1000mg-with-180mg-EPA-and-120mg-DHA-90-capsules_o.jpg',
@@ -462,7 +474,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img6.hkrtcdn.com/30837/prd_3083695-TrueBasics-Ultra-Omega3-EPA-525mg-DHA-400mg-90-capsules_o.jpg',
           'https://img6.hkrtcdn.com/30838/prd_3083705-TrueBasics-Ultra-Omega3-EPA-525mg-DHA-400mg-90-capsules_o.jpg',
@@ -507,7 +520,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img6.hkrtcdn.com/30837/prd_3083695-TrueBasics-Ultra-Omega3-EPA-525mg-DHA-400mg-90-capsules_o.jpg',
           'https://img6.hkrtcdn.com/30838/prd_3083705-TrueBasics-Ultra-Omega3-EPA-525mg-DHA-400mg-90-capsules_o.jpg',
@@ -554,7 +568,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img10.hkrtcdn.com/38924/prd_3892369-INLIFE-Green-Coffee-Beans-800mg-60-veggie-capsules_o.jpg',
           'https://img8.hkrtcdn.com/38924/prd_3892307-INLIFE-Green-Coffee-Beans-800mg-60-veggie-capsules_o.jpg',
@@ -589,7 +604,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img9.hkrtcdn.com/19555/prd_1955438-NutraFirst-Pure-Green-Coffee-Bean-Extract-60-capsules_o.jpg',
           'https://img7.hkrtcdn.com/19555/prd_1955436-NutraFirst-Pure-Green-Coffee-Bean-Extract-60-capsules_o.jpg',
@@ -624,7 +640,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img6.hkrtcdn.com/41576/prd_4157515-NutraFirst-Pure-Green-Coffee-Bean-Extract-180-capsules_o.jpg',
           'https://img2.hkrtcdn.com/41577/prd_4157611-NutraFirst-Pure-Green-Coffee-Bean-Extract-180-capsules_o.jpg',
@@ -660,7 +677,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Dark Chocolate',
+        label: 'Flavour',
+        value: 'Dark Chocolate',
         images: [
           'https://img2.hkrtcdn.com/30236/prd_3023511-MuscleBlaze-High-Protein-Oats-2-kg-Dark-Chocolate_o.jpg',
           'https://img4.hkrtcdn.com/30236/prd_3023513-MuscleBlaze-High-Protein-Oats-2-kg-Dark-Chocolate_o.jpg',
@@ -697,7 +715,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Dark Chocolate',
+        label: 'Flavour',
+        value: 'Dark Chocolate',
         images: [
           'https://img6.hkrtcdn.com/39671/prd_3967085-MuscleBlaze-High-Protein-Oats-1-kg-Dark-Chocolate_o.jpg',
           'https://img10.hkrtcdn.com/35980/prd_3597939-MuscleBlaze-High-Protein-Oats-1-kg-Dark-Chocolate_o.jpg',
@@ -708,7 +727,8 @@ final List<NewProductModel> newProducts = [
         ],
       ),
       VarientImages(
-        title: 'Fruit and Super Seed',
+        label: 'Flavour',
+        value: 'Fruit and Super Seed',
         images: [
           'https://img4.hkrtcdn.com/39607/prd_3960643-MuscleBlaze-High-Protein-Oats-1-kg-Fruit-Super-Seeds_o.jpg',
           'https://img2.hkrtcdn.com/30611/prd_3061071-MuscleBlaze-High-Protein-Oats-1-kg-Fruit-Super-Seeds_o.jpg',
@@ -746,7 +766,8 @@ final List<NewProductModel> newProducts = [
     baseImages: [],
     varientImages: [
       VarientImages(
-        title: 'Base',
+        label: 'Base',
+        value: '',
         images: [
           'https://img9.hkrtcdn.com/18564/prd_1856328-ForMen-Minoxidil-Topical-Hair-Growth-Solution-60-ml-for-All-Types-of-Hair_o.jpg',
           'https://img3.hkrtcdn.com/18564/prd_1856332-ForMen-Minoxidil-Topical-Hair-Growth-Solution-60-ml-for-All-Types-of-Hair_o.jpg',

@@ -9,19 +9,28 @@ import 'package:ciyone_nutrimix/models/new_product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/add_new_address.dart';
+import 'package:ciyone_nutrimix/views/product/product_varient_images.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/purchase_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/widgets/home_products.dart';
 import 'package:ciyone_nutrimix/views/product/product_image_slider.dart';
+import 'package:ciyone_nutrimix/views/widgets/bordered_container.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.product});
   final NewProductModel product;
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ValueNotifier<int> productVarientIndex = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,17 +68,22 @@ class ProductDetailScreen extends StatelessWidget {
             children: [
               buildDeliveryDetail(context),
               15.h,
-              ProductImageSlider(
-                images: [
-                  ...product.varientImages[0].images,
-                  ...product.baseImages ?? [],
-                ],
-                productId: product.id,
+              ValueListenableBuilder(
+                valueListenable: productVarientIndex,
+                builder: (context, varientIndex, child) {
+                  return ProductImageSlider(
+                    images: [
+                      ...widget.product.varientImages[varientIndex].images,
+                      ...widget.product.baseImages ?? [],
+                    ],
+                    productId: widget.product.id,
+                  );
+                },
               ),
               15.h,
-              _buildProductDetails(context, product: product),
+              _buildProductDetails(context, product: widget.product),
               30.h,
-              _buildVariant(context, product: product),
+              _buildVariant(context, product: widget.product),
               20.h,
               _buildDeliveryAndServices(context),
               20.h,
@@ -79,7 +93,7 @@ class ProductDetailScreen extends StatelessWidget {
               20.h,
               _buildDetails(context),
               20.h,
-              _buildCustomerReviews(context, product: product),
+              _buildCustomerReviews(context, product: widget.product),
               20.h,
               const HomeProducts(titles: ['Similar Products']),
               20.h,
@@ -117,7 +131,7 @@ class ProductDetailScreen extends StatelessWidget {
                     data: (data) {
                       List<CartModel> cart = data.cart;
                       bool isInCart = cart.any(
-                        (element) => element.productId == product.id,
+                        (element) => element.productId == widget.product.id,
                       );
                       return GestureDetector(
                         onTap: isInCart
@@ -125,7 +139,7 @@ class ProductDetailScreen extends StatelessWidget {
                                 AppNavigator.push(const CartScreen());
                               }
                             : () async {
-                                await addToCart(context, product.id);
+                                await addToCart(context, widget.product.id);
                               },
                         child: SizedBox(
                           width: ScreenSize.width / 2,
@@ -147,7 +161,7 @@ class ProductDetailScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  AppNavigator.push(PurchaseScreen(product: product));
+                  AppNavigator.push(PurchaseScreen(product: widget.product));
                 },
                 child: Container(
                   color: AppColors.primary,
@@ -250,32 +264,28 @@ class ProductDetailScreen extends StatelessWidget {
       children: [
         Text('Select Variant', style: context.bodyLarge),
         8.h,
-        Container(
-          decoration: BoxDecoration(
-            border: BoxBorder.all(color: AppColors.borderColor),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(13.0),
-            child: Row(
-              children: [
-                Text(
-                  '${product.currentVarient.label}:  ',
-                  style: context.bodyLarge?.copyWith(
-                    color: AppColors.secondaryTextColor,
-                  ),
+        BorderedContainer(
+          child: Row(
+            children: [
+              Text(
+                '${product.currentVarient.label}:  ',
+                style: context.bodyLarge?.copyWith(
+                  color: AppColors.secondaryTextColor,
                 ),
-                Text(
-                  product.currentVarient.value,
-                  style: context.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Spacer(),
-                const CustomIcon(AppIcons.arrowForward),
-              ],
-            ),
+              ),
+              Text(
+                product.currentVarient.value,
+                style: context.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const Spacer(),
+              const CustomIcon(AppIcons.arrowForward),
+            ],
           ),
+        ),
+        8.h,
+        ProductVarientImages(
+          varientImages: product.varientImages,
+          varientIndex: productVarientIndex,
         ),
       ],
     );

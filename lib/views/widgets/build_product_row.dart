@@ -217,8 +217,11 @@ class BuildProductRow extends ConsumerWidget {
                                     ],
                                   );
                                 },
-                                error: (error, stackTrace) =>
-                                    const Text('Error occured'),
+                                error: (error, stackTrace) {
+                                  print(error);
+                                  print(stackTrace);
+                                  return const Text('Error occured');
+                                },
                                 loading: () => const Center(
                                   child: CircularProgressIndicator(),
                                 ),
@@ -236,8 +239,8 @@ class BuildProductRow extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
-        // print(error);
-        // print(stackTrace);
+        print(error);
+        print(stackTrace);
         return const Text('Error occured...');
       },
       loading: () => const BuildProductRowWireframe(),

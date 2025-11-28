@@ -23,23 +23,12 @@ class _SummaryDetailsState extends State<SummaryDetails> {
     return Column(
       children: [
         ExpandToggler(
-          title: null,
+          value: ' ₹${product.price}',
           onChanged: (value) {
             isExpaned = value;
             setState(() {});
           },
-          child: RichText(
-            text: TextSpan(
-              text: 'Cash On Delivery',
-              style: context.bodyLarge?.copyWith(
-                color: AppColors.secondaryTextColor,
-                fontWeight: FontWeight.normal,
-              ),
-              children: [
-                TextSpan(text: ' ₹${product.price}', style: context.bodyLarge),
-              ],
-            ),
-          ),
+          title: 'Cash On Delivery',
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 300),

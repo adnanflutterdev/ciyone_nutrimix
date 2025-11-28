@@ -20,7 +20,7 @@ class _SimplPaymentState extends State<SimplPayment> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isStreached = value;
             setState(() {});

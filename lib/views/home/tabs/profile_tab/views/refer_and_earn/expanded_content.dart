@@ -27,7 +27,7 @@ class _ExpandedContentState extends State<ExpandedContent> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isExpanded = value;
             setState(() {});

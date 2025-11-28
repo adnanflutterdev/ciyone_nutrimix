@@ -50,7 +50,7 @@ class FaqScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: index == faqs.length
                   ? const InviteAndEarn()
-                  : ExpandToggler(title: faqs[index]),
+                  : ExpandToggler(value: faqs[index]),
             );
           },
         ),

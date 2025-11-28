@@ -26,7 +26,7 @@ class _PayLaterPaymentState extends State<PayLaterPayment> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isStreached = value;
             setState(() {});

@@ -71,8 +71,12 @@ class NewProductModel {
       'secondaryCategory': secondaryCategory,
       'tertiaryCategory': tertiaryCategory,
       'info': info.toJson(),
-      'varientImages': varientImages.map((varients)=> varients.toJson()).toList(),
-      'varientProducts': varientProducts.map((varients)=> varients.toJson()).toList(),
+      'varientImages': varientImages
+          .map((varients) => varients.toJson())
+          .toList(),
+      'varientProducts': varientProducts
+          .map((varients) => varients.toJson())
+          .toList(),
       'baseImages': baseImages,
     };
   }
@@ -205,13 +209,15 @@ class Extras {
 }
 
 class VarientImages {
-  final String title;
+  final String label;
+  final String value;
   final List<String> images;
 
-  VarientImages({required this.title, required this.images});
+  VarientImages({required this.label,required this.value, required this.images});
   factory VarientImages.fromJson(Map<String, dynamic> varient) {
     return VarientImages(
-      title: varient['title'],
+      label: varient['label'],
+      value: varient['value'],
       images: (varient['images'] as List<dynamic>)
           .map((image) => image.toString())
           .toList(),
@@ -219,23 +225,25 @@ class VarientImages {
   }
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'images': images};
+    return {'label': label,'value':value, 'images': images};
   }
 }
 
 class VarientProducts {
-  final String title;
+  final String label;
+  final String value;
   final String varientId;
 
-  VarientProducts({required this.title, required this.varientId});
+  VarientProducts({required this.label, required this.value,required this.varientId});
   factory VarientProducts.fromJson(Map<String, dynamic> varients) {
     return VarientProducts(
-      title: varients['title'] ?? '',
+      label: varients['label'] ?? '',
+      value: varients['value'] ?? '',
       varientId: varients['varientId'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'varientId': varientId};
+    return {'label': label,'value':value, 'varientId': varientId};
   }
 }

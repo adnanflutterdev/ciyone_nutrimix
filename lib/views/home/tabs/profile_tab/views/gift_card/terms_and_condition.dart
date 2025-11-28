@@ -37,7 +37,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
     return Column(
       children: [
         ExpandToggler(
-          title: 'Terms & Condition',
+          value: 'Terms & Condition',
           onChanged: (value) {
             isExpanded = value;
             setState(() {});

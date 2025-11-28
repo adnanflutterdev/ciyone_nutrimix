@@ -41,7 +41,7 @@ class _FaqsDetailsState extends State<FaqsDetails> {
     return Column(
       children: [
         ExpandToggler(
-          title: 'Faqs',
+          value: 'Faqs',
           onChanged: (value) {
             setState(() {
               isExpanded = value;

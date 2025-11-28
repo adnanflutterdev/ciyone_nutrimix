@@ -20,7 +20,7 @@ class _NetBankingPaymentState extends State<NetBankingPayment> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isStreached = value;
             setState(() {});

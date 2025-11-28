@@ -24,7 +24,7 @@ class _MyReferralsState extends State<MyReferrals> {
     return Column(
       children: [
         ExpandToggler(
-          title: widget.title,
+          value: widget.title,
           onChanged: (value) {
             isExpanded = value;
             setState(() {});

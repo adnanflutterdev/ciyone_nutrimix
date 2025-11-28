@@ -85,7 +85,7 @@ class CategoryDetails extends StatelessWidget {
                 children: labels.map((label) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 15.0),
-                    child: ExpandToggler(title: label, onChanged: null),
+                    child: ExpandToggler(value: label, onChanged: null),
                   );
                 }).toList(),
               ),
