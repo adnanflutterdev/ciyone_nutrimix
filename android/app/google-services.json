@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "29573635978",
+    "project_id": "ciyone-nutrimix",
+    "storage_bucket": "ciyone-nutrimix.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29573635978:android:d694113f78754b6a28f273",
+        "android_client_info": {
+          "package_name": "com.example.ciyone_nutrimix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3pN2vBkchcfm-n-Gt1RB4YsKG0-cp1Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

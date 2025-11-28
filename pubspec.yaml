@@ -1,0 +1,64 @@
+name: ciyone_nutrimix
+description: "A Flutter app for 'ciyone_nutrimix' "
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # App packages 
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.2.2
+  stroke_text: ^1.0.0
+  flutter_rating_bar: ^4.0.1
+  dotted_border: ^3.1.0
+  dotted_line: ^3.2.3
+  firebase_auth: ^6.1.2
+  cloud_firestore: ^6.1.0
+  firebase_core: ^4.2.1
+  uuid: ^4.5.2
+  flutter_riverpod: ^3.0.3
+  cached_network_image: ^3.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  # Image assets
+  assets:
+    - assets/bg/
+    - assets/logo/
+    - assets/icons/
+    - assets/social/
+    - assets/tab_icons/
+    - assets/top_brands/
+    - assets/categories/
+    - assets/dummy_images/
+    - assets/payment_icons/
+    - assets/notifications/
+  # Custom fonts
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 600
+    - family: PoppinsBold
+      fonts:
+        - asset: assets/fonts/poppins_bold.ttf
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/rubik-regular.ttf
+          weight: 900
+          
+
