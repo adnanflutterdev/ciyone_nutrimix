@@ -15,7 +15,6 @@ import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/purchase_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/widgets/home_products.dart';
 import 'package:ciyone_nutrimix/views/product/product_image_slider.dart';
-import 'package:ciyone_nutrimix/views/widgets/bordered_container.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';

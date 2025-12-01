@@ -1,4 +1,6 @@
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
+import 'package:ciyone_nutrimix/models/address_model.dart';
+import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/order_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -6,7 +8,10 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class RazorpayPayment {
   final BuildContext context;
-  RazorpayPayment(this.context);
+  final List<CartModel> cart;
+  final AddressModel address;
+  final bool wasFromCart;
+  RazorpayPayment(this.context, {required this.cart, required this.address,required this.wasFromCart});
   late Razorpay _razorpay;
 
   void initPayment(BuildContext context, {required int amount}) {
@@ -23,26 +28,26 @@ class RazorpayPayment {
       'name': 'Test Payment',
       'description': 'Test Transaction',
       'timeout': 600, // optional
-      'prefill': {'contact': '8085302570', 'email': 'adnan@gmail.com'},
+      'prefill': {'contact': address.number, 'email': address.emailId},
     };
 
     try {
       _razorpay.open(options);
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
     }
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print('Payment Successful: ${response.paymentId}');
+    // print('Payment Successful: ${response.paymentId}');
     AppNavigator.pushReplacement(
-      const OrderSuccessScreen(),
+      OrderSuccessScreen(isCashOnDelivery: false, cart: cart, address: address,wasFromCart: wasFromCart,),
       pageAnimation: PageAnimation.fade,
     );
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print('Payment Failed: ${response.message}');
+    debugPrint('Payment Failed: ${response.message}');
     showDialog(
       context: context,
       builder: (context) {
@@ -63,7 +68,7 @@ class RazorpayPayment {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    print('External Wallet Selected');
+    debugPrint('External Wallet Selected');
   }
 
   void dispose() {

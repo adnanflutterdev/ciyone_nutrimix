@@ -68,7 +68,7 @@ class BuildAddress extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                ', ',
+                                ' - ',
                                 style: context.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),

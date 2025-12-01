@@ -1,3 +1,5 @@
+import 'package:ciyone_nutrimix/models/user_model.dart';
+import 'package:ciyone_nutrimix/views/widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +14,14 @@ import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/add_new_address.dart';
 
 class AddressScreen extends StatefulWidget {
-  const AddressScreen({super.key});
+  const AddressScreen({super.key, this.hasAppBar = true});
+  final bool hasAppBar;
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  // int _addressIndex = 0;
-  // final List<AddressModel> _addresses = [];
   DocumentReference<Map> ref = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid);
@@ -32,34 +33,19 @@ class _AddressScreenState extends State<AddressScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        final myData = snapshot.data!.data()!;
+        UserModel myData = UserModel.fromJson(
+          snapshot.data!.data()! as Map<String, dynamic>,
+        );
 
-        List<AddressModel> myAddresses = (myData['address'] as List)
-            .map((address) => AddressModel.fromJson(address))
-            .toList();
+        List<AddressModel> myAddresses = myData.address;
 
-        int addressIndex = myData['addressIndex'];
+        int addressIndex = myData.addressIndex;
 
         return Scaffold(
-          appBar: AppBar(
-            leadingWidth: 40,
-            leading: CustomIcon(
-              AppIcons.arrowBack,
-              onPressed: () => AppNavigator.pop(),
-              horzontalPadding: 8,
-            ),
-            titleSpacing: 0,
-            title: Text(
-              'Select Delivery Address',
-              style: context.titleSmall?.copyWith(fontFamily: 'PoppinsBold'),
-            ),
+          appBar: widget.hasAppBar
+              ? const CustomAppBar(title: 'Select Delivery Address')
+              : null,
 
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: AppColors.borderStrokeColor.withValues(alpha: 0.6),
-              ),
-            ),
-          ),
           body: myAddresses.isEmpty
               ? Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -128,10 +114,23 @@ class _AddressScreenState extends State<AddressScreen> {
                                     horzontalPadding: 5,
                                     verticalPadding: 5,
                                     onPressed: () async {
+                                      // New index
+                                      int length = myAddresses.length - 2;
+                                      int newAddressIndex =
+                                          addressIndex > length
+                                          ? length
+                                          : length == 0
+                                          ? -1
+                                          : addressIndex;
+                                      // print('new Length is : $length');
+                                      // print(
+                                      //   'new address index is : $newAddressIndex',
+                                      // );
                                       await ref.update({
                                         'address': FieldValue.arrayRemove([
                                           address.toJson(),
                                         ]),
+                                        'addressIndex': newAddressIndex,
                                       });
                                     },
                                   ),

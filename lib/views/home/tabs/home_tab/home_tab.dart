@@ -1,4 +1,3 @@
-import 'package:ciyone_nutrimix/dev/upload_products.dart';
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:ciyone_nutrimix/dummy_data/chips.dart';

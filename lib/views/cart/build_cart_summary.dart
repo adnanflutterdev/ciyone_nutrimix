@@ -1,13 +1,16 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
+import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/cart_model.dart';
-import 'package:ciyone_nutrimix/razorpay/razorpay_payment.dart';
+import 'package:ciyone_nutrimix/views/cart/check_out_screen.dart';
+import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/address_screen.dart';
 import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
+import 'package:ciyone_nutrimix/views/widgets/show_app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,9 +22,9 @@ class BuildCartSummary extends StatefulWidget {
 }
 
 class _BuildCartSummaryState extends State<BuildCartSummary> {
-  double containerHeight = 300;
+  double containerHeight = 350;
   final double minHeight = 30;
-  final double maxHeight = 400;
+  final double maxHeight = 500;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -178,18 +181,31 @@ class _BuildCartSummaryState extends State<BuildCartSummary> {
                             ),
                           ),
                           10.h,
-                          PaymentButton(
-                            label: 'Checkout',
-                            onPressed: () {
-                              RazorpayPayment razorpayPayment = RazorpayPayment(
-                                context,
-                              );
-                              razorpayPayment.initPayment(
-                                context,
-                                amount: sumOfPrices,
-                              );
-                            },
-                          ),
+                          if (data.cart.isNotEmpty)
+                            PaymentButton(
+                              label: 'Checkout',
+                              color: data.addressIndex < 0
+                                  ? AppColors.stepperActiveColor.withValues(
+                                      alpha: 0.4,
+                                    )
+                                  : null,
+                              onPressed: data.addressIndex < 0
+                                  ? () {
+                                      showAppSnackbar(
+                                        context: context,
+                                        message: 'Add delivery address first',
+                                      );
+                                      AppNavigator.push(const AddressScreen());
+                                    }
+                                  : () {
+                                      AppNavigator.push(
+                                        CheckOutScreen(
+                                          amount: sumOfPrices,
+                                          cart: cart,
+                                        ),
+                                      );
+                                    },
+                            ),
                         ],
                       );
                     },

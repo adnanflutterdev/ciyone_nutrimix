@@ -2,12 +2,16 @@ import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
+import 'package:ciyone_nutrimix/models/address_model.dart';
 import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/widgets/cart_item.dart';
 import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
+import 'package:ciyone_nutrimix/views/widgets/bordered_container.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaceOrder extends StatelessWidget {
   const PlaceOrder({super.key, required this.product});
@@ -168,16 +172,32 @@ class PlaceOrder extends StatelessWidget {
             20.h,
             Text('Delivery Address', style: context.titleSmall),
             8.h,
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: AppColors.borderColor),
-              ),
-              child: Text(
-                'Ground floor, Teepeyem Enclave, Kaloor - Kadavanthara Rd, opp. Gokul Oottupura, Kochi, Kerala 682020',
-                style: context.bodyMedium,
-              ),
+            Consumer(
+              builder: (context, ref, child) {
+                final myDetails = ref.watch(myDetailsProvider);
+                return myDetails.when(
+                  data: (data) {
+                    AddressModel add = data.address[data.addressIndex];
+                    return BorderedContainer(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '${add.address}, ${add.city}, ${add.state} ${add.pincode}',
+                              style: context.bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return const Center(child: Text('Something went worng'));
+                  },
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                );
+              },
             ),
           ],
         );

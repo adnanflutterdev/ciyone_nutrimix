@@ -4,10 +4,12 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/widgets/stepper_views.dart';
 import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key, required this.product});
@@ -20,6 +22,12 @@ class PurchaseScreen extends StatefulWidget {
 class _PurchaseScreenState extends State<PurchaseScreen> {
   int stepperIndex = 0;
   List<String> stepperLabel = ['Review', 'Address', 'Place Order', 'Payment'];
+
+  @override
+  void initState() {
+    super.initState();
+    quantity.value = 1;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,34 +82,57 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         ),
         bottomNavigationBar: SafeArea(
           child: stepperIndex != 3
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      stepperIndex++;
-                    });
+              ? Consumer(
+                  builder: (context, ref, child) {
+                    final myDetails = ref.watch(myDetailsProvider);
+                    return myDetails.when(
+                      data: (data) {
+                        return GestureDetector(
+                          onTap: (stepperIndex == 1 && data.addressIndex < 0)
+                              ? null
+                              : () {
+                                  setState(() {
+                                    stepperIndex++;
+                                  });
+                                },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  (stepperIndex == 1 && data.addressIndex < 0)
+                                  ? AppColors.primary.withValues(alpha: 0.4)
+                                  : AppColors.primary,
+                              border:
+                                  (stepperIndex == 1 && data.addressIndex < 0)
+                                  ? null
+                                  : const Border(
+                                      top: BorderSide(
+                                        color: AppColors.borderStrokeColor,
+                                      ),
+                                    ),
+                            ),
+                            width: ScreenSize.width,
+                            height: 60,
+                            child: Center(
+                              child: Text(
+                                stepperIndex == 1
+                                    ? 'Continue'
+                                    : stepperIndex == 2
+                                    ? 'Place Order'
+                                    : 'Continue',
+                                style: context.bodyLarge?.copyWith(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return const SizedBox.shrink();
+                      },
+                      loading: () => const SizedBox.shrink(),
+                    );
                   },
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      border: Border(
-                        top: BorderSide(color: AppColors.borderStrokeColor),
-                      ),
-                    ),
-                    width: ScreenSize.width,
-                    height: 60,
-                    child: Center(
-                      child: Text(
-                        stepperIndex == 1
-                            ? 'Save Address & Proceed'
-                            : stepperIndex == 2
-                            ? 'Place Order'
-                            : 'Continue',
-                        style: context.bodyLarge?.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                  ),
                 )
               : const SizedBox.shrink(),
         ),

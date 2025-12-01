@@ -67,10 +67,12 @@ class PaymentButton extends StatelessWidget {
     super.key,
     this.icon,
     this.onPressed,
+    this.color,
     required this.label,
   });
   final String label;
   final String? icon;
+  final Color? color;
   final Function()? onPressed;
 
   @override
@@ -80,7 +82,7 @@ class PaymentButton extends StatelessWidget {
       child: Container(
         height: 45,
         decoration: BoxDecoration(
-          color: AppColors.stepperActiveColor,
+          color: color ?? AppColors.stepperActiveColor,
           borderRadius: BorderRadius.circular(6),
         ),
         child: Row(

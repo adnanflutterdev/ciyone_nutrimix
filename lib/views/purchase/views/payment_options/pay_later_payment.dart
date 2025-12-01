@@ -1,9 +1,7 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
-import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/views/purchase/views/order_success_screen.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/payment_options/payment_options_drop_down.dart';
 import 'package:ciyone_nutrimix/core/constants/text_field_border.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
@@ -144,10 +142,10 @@ class _PayLaterOptionsState extends State<PayLaterOptions> {
                 PaymentButton(
                   label: 'Proceed',
                   onPressed: () {
-                    AppNavigator.pushReplacement(
-                      const OrderSuccessScreen(),
-                      pageAnimation: PageAnimation.fade,
-                    );
+                    // AppNavigator.pushReplacement(
+                    //   const OrderSuccessScreen(),
+                    //   pageAnimation: PageAnimation.fade,
+                    // );
                   },
                 ),
               ],

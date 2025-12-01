@@ -1,39 +1,70 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
+import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
+import 'package:ciyone_nutrimix/core/utils/get_time.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
+import 'package:ciyone_nutrimix/models/address_model.dart';
+import 'package:ciyone_nutrimix/models/cart_model.dart';
+import 'package:ciyone_nutrimix/models/order_model.dart';
 import 'package:ciyone_nutrimix/views/home/home_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/orders_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uuid/uuid.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
-  const OrderSuccessScreen({super.key});
+  const OrderSuccessScreen({
+    super.key,
+    required this.cart,
+    required this.isCashOnDelivery,
+    required this.address,
+    required this.wasFromCart,
+  });
+  final List<CartModel> cart;
+  final bool isCashOnDelivery;
+  final AddressModel address;
+  final bool wasFromCart;
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateTime = DateTime.now();
-    int hrs = dateTime.hour > 12 ? dateTime.hour - 12 : dateTime.hour;
-    int mins = dateTime.minute;
-    List<String> shortMonthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
+    String time = getCurrentDateTime();
 
-    String time =
-        'On ${dateTime.day} ${shortMonthNames[dateTime.month]} ${hrs < 10 ? '0$hrs' : '$hrs'}:${mins < 10 ? '0$mins' : '$mins'} ${dateTime.hour >= 12 ? 'PM' : "AM"}';
+    void updateOrders() async {
+      OrderModel orderModel = OrderModel(
+        id: const Uuid().v4(),
+        carts: cart,
+        orderStatus: OrderStatus(
+          orderDate: time,
+          packaged: false,
+          shipped: false,
+          deliveryDate: getDateTimeAfter(3),
+          delivered: false,
+          cancelled: false,
+        ),
+        paymentMethod: isCashOnDelivery ? 'Cash on Delivery' : 'Razorpay',
+        address: address,
+      );
+      quantity.value = 1;
+
+      print(orderModel.toJson());
+      DocumentReference ref = FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid);
+      await ref
+          .collection('myOrders')
+          .doc('${Timestamp.now().microsecondsSinceEpoch}')
+          .set(orderModel.toJson());
+      if (wasFromCart) {
+        ref.update({'cart': []});
+      }
+    }
+
+    updateOrders();
 
     return Scaffold(
       appBar: AppBar(
@@ -72,8 +103,8 @@ class OrderSuccessScreen extends StatelessWidget {
                     repeat: false,
                   ),
                 ),
-                const Text('Your order is successful'),
-                Text(time),
+                const Text('Your order is placed successfully'),
+                Text('On  $time'),
               ],
             ),
           ),

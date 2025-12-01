@@ -3,7 +3,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/address_model.dart';
-import 'package:ciyone_nutrimix/views/purchase/views/address.dart';
+import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/address_fields.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:ciyone_nutrimix/views/widgets/show_app_snackbar.dart';
@@ -68,7 +68,9 @@ class _AddNewAddressState extends State<AddNewAddress> {
         'address': FieldValue.arrayRemove([address!.toJson()]),
       });
       await ref.update({
-        'address': updatedAddresses.map((AddressModel addressModel)=> addressModel.toJson()).toList(),
+        'address': updatedAddresses
+            .map((AddressModel addressModel) => addressModel.toJson())
+            .toList(),
       });
       if (!mounted) return;
       showAppSnackbar(
@@ -135,7 +137,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
           ),
         ),
       ),
-      body: Address(
+      body: AddressFields(
         addressControllers: addressControllers,
         addressTypeIndex: addressIndex,
       ),
