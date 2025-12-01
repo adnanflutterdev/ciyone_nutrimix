@@ -10,6 +10,7 @@ import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/add_new_address.dart';
 import 'package:ciyone_nutrimix/views/product/product_varient_images.dart';
+import 'package:ciyone_nutrimix/views/product/product_varients.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/purchase_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/widgets/home_products.dart';
@@ -264,23 +265,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       children: [
         Text('Select Variant', style: context.bodyLarge),
         8.h,
-        BorderedContainer(
-          child: Row(
-            children: [
-              Text(
-                '${product.currentVarient.label}:  ',
-                style: context.bodyLarge?.copyWith(
-                  color: AppColors.secondaryTextColor,
-                ),
-              ),
-              Text(
-                product.currentVarient.value,
-                style: context.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-              ),
-              const Spacer(),
-              const CustomIcon(AppIcons.arrowForward),
-            ],
-          ),
+        // BorderedContainer(
+        //   child: Row(
+        //     children: [
+        //       Text(
+        //         '${product.currentVarient.label}:  ',
+        //         style: context.bodyLarge?.copyWith(
+        //           color: AppColors.secondaryTextColor,
+        //         ),
+        //       ),
+        //       Text(
+        //         product.currentVarient.value,
+        //         style: context.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+        //       ),
+        //       const Spacer(),
+        //       const CustomIcon(AppIcons.arrowForward),
+        //     ],
+        //   ),
+        // ),
+        ProductVarients(
+          currentVarient: product.currentVarient,
+          varientProducts: product.varientProducts,
         ),
         8.h,
         ProductVarientImages(

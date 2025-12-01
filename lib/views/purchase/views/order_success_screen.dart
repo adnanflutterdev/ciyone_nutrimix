@@ -2,12 +2,12 @@ import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
-import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/views/home/home_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/orders_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   const OrderSuccessScreen({super.key});
@@ -49,20 +49,35 @@ class OrderSuccessScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CustomIcon(
-              AppIcons.tickCircle,
-              color: AppColors.success,
-              size: 60,
+      body: Stack(
+        children: [
+          Lottie.asset('assets/lottie/coffetti.json', repeat: false),
+          Transform.flip(
+            flipX: true,
+            child: Lottie.asset('assets/lottie/coffetti.json', repeat: false),
+          ),
+          // Transform(
+          //   transform: Matrix4.identity()..rotateZ(90),
+          //   child: Lottie.asset('assets/lottie/coffetti.json', repeat: true),
+          // ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 150,
+                  child: Lottie.asset(
+                    'assets/lottie/payment_success.json',
+                    fit: BoxFit.fitHeight,
+                    repeat: false,
+                  ),
+                ),
+                const Text('Your order is successful'),
+                Text(time),
+              ],
             ),
-            15.h,
-            const Text('Your order is successful'),
-            Text(time),
-          ],
-        ),
+          ),
+        ],
       ),
       // Bottom Buttons
       bottomNavigationBar: SafeArea(

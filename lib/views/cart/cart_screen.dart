@@ -16,12 +16,14 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: CustomAppBar(title: 'My Cart'),
-      body: Column(
-        children: [
-          BuildAddress(),
-          Expanded(child: BuildCartItem()),
-          BuildCartSummary(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            BuildAddress(),
+            Expanded(child: BuildCartItem()),
+            BuildCartSummary(),
+          ],
+        ),
       ),
     );
   }

@@ -3,9 +3,11 @@ import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/cart_model.dart';
+import 'package:ciyone_nutrimix/razorpay/razorpay_payment.dart';
 import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
+import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,9 +71,14 @@ class _BuildCartSummaryState extends State<BuildCartSummary> {
                       int sumOfPrices = 0;
                       int sumOfDiscount = 0;
                       for (int x = 0; x < cartProducts.length; x++) {
-                        sumOfPrices += cartProducts[x].pricing.price.toInt() * cart[x].quantity;
+                        sumOfPrices +=
+                            cartProducts[x].pricing.price.toInt() *
+                            cart[x].quantity;
                         sumOfDiscount +=
-                            (cartProducts[x].pricing.mrp - cartProducts[x].pricing.price).toInt() * cart[x].quantity;
+                            (cartProducts[x].pricing.mrp -
+                                    cartProducts[x].pricing.price)
+                                .toInt() *
+                            cart[x].quantity;
                       }
                       return ListView(
                         children: [
@@ -169,6 +176,19 @@ class _BuildCartSummaryState extends State<BuildCartSummary> {
                                 ),
                               ],
                             ),
+                          ),
+                          10.h,
+                          PaymentButton(
+                            label: 'Checkout',
+                            onPressed: () {
+                              RazorpayPayment razorpayPayment = RazorpayPayment(
+                                context,
+                              );
+                              razorpayPayment.initPayment(
+                                context,
+                                amount: sumOfPrices,
+                              );
+                            },
                           ),
                         ],
                       );

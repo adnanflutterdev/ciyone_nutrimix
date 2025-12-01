@@ -116,11 +116,13 @@ class BuildProductRow extends ConsumerWidget {
                                           width: 92,
                                           height: 92,
                                           placeholder: (context, url) =>
-                                              const SizedBox(
-                                                width: 20,
-                                                height: 20,
-                                                child:
-                                                    CircularProgressIndicator(),
+                                              const Center(
+                                                child: SizedBox(
+                                                  width: 20,
+                                                  height: 20,
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
                                               ),
                                         ),
                                       ),
@@ -239,8 +241,8 @@ class BuildProductRow extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
-        print(error);
-        print(stackTrace);
+        // print(error);
+        // print(stackTrace);
         return const Text('Error occured...');
       },
       loading: () => const BuildProductRowWireframe(),

@@ -1,6 +1,7 @@
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
-import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
-import 'package:ciyone_nutrimix/views/purchase/views/order_success_screen.dart';
+// import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
+// import 'package:ciyone_nutrimix/razorpay/razorpay_payment.dart';
+// import 'package:ciyone_nutrimix/views/purchase/views/order_success_screen.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/payment_options/payment_options_drop_down.dart';
 import 'package:ciyone_nutrimix/views/widgets/expand_toggler.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +39,12 @@ class _AppsPaymentState extends State<AppsPayment> {
                         'Upto rs 500 cashback on your cred pay upi transaction',
                     icon: AppIcons.arrowForward,
                     onTap: () {
-                      AppNavigator.pushReplacement(
-                        const OrderSuccessScreen(),
-                        pageAnimation: PageAnimation.fade,
-                      );
+                      // RazorpayPayment razorpayPayment = RazorpayPayment();
+                      // razorpayPayment.initPayment();
+                      // AppNavigator.pushReplacement(
+                      //   const OrderSuccessScreen(),
+                      //   pageAnimation: PageAnimation.fade,
+                      // );
                     },
                   ),
                 )

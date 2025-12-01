@@ -79,12 +79,12 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
                               },
                             ),
 
-                            IconButton(
-                              onPressed: () async {
-                                await uploadProducts();
-                              },
-                              icon: const Icon(Icons.upload),
-                            ),
+                            // IconButton(
+                            //   onPressed: () async {
+                            //     await uploadProducts();
+                            //   },
+                            //   icon: const Icon(Icons.upload),
+                            // ),
                           ],
                         ),
                         8.h,
