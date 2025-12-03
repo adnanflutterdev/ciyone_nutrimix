@@ -3,7 +3,7 @@ import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> uploadProducts() async {
-  final List<Product> allProducts = newProducts;
+  final List<Product> allProducts = products;
 
   for (Product product in allProducts) {
     await FirebaseFirestore.instance

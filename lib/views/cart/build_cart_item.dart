@@ -44,7 +44,6 @@ class BuildCartItem extends ConsumerWidget {
           itemCount: cartProducts.length,
           itemBuilder: (context, index) {
             CartModel cartItem = cart[index];
-            print(cartItem.varientIndex);
             Product product = cartProducts[index];
             return Padding(
               padding: const EdgeInsets.symmetric(

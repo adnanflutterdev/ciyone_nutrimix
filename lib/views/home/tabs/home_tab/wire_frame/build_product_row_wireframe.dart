@@ -45,7 +45,7 @@ class BuildProductRowWireframe extends StatelessWidget {
             itemCount: 5,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              Product product = newProducts[index];
+              Product product = products[index];
               final off = product.pricing.discountPercentage;
               return Padding(
                 padding: const EdgeInsets.only(right: 12.0),

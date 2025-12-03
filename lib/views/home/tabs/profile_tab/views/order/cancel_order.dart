@@ -11,7 +11,6 @@ import 'package:ciyone_nutrimix/views/widgets/custom_text_field.dart';
 import 'package:ciyone_nutrimix/views/widgets/show_app_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CancelOrder extends StatefulWidget {

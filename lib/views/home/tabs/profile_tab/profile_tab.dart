@@ -3,6 +3,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
+import 'package:ciyone_nutrimix/models/address_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/about_us_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/contact_us_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/faq_screen.dart';
@@ -19,11 +20,13 @@ import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/refer_and_earn
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/rewards_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/store_locator_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/wish_list/wish_list_screen.dart';
+import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/splash_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:ciyone_nutrimix/views/widgets/show_app_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -154,16 +157,41 @@ class ProfileTab extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadiusGeometry.circular(6),
               ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 27,
-                  backgroundColor: AppColors.white,
-                  child: Text('G', style: context.titleLarge),
-                ),
-                title: const Text('Guest'),
-                titleTextStyle: context.titleLarge,
-                subtitle: const Text('Indore, Madhya Pradesh'),
-                trailing: const CustomIcon(AppIcons.edit),
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final myDetails = ref.watch(myDetailsProvider);
+                  return myDetails.when(
+                    data: (myDetails) {
+                      AddressModel? address = myDetails.addressIndex >= 0
+                          ? myDetails.address[myDetails.addressIndex]
+                          : null;
+                      return ListTile(
+                        leading: CircleAvatar(
+                          radius: 27,
+                          backgroundColor: AppColors.white,
+                          child: Text(
+                            myDetails.name[0],
+                            style: context.titleLarge,
+                          ),
+                        ),
+                        title: Text(myDetails.name),
+                        titleTextStyle: context.titleLarge,
+                        subtitle: address != null
+                            ? Text('${address.city}, ${address.state}')
+                            : const Text(''),
+                        trailing: CustomIcon(
+                          AppIcons.edit,
+                          onPressed: () {
+                            AppNavigator.push(const ProfileDetail());
+                          },
+                        ),
+                      );
+                    },
+                    error: (error, stackTrace) => const SizedBox.shrink(),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                  );
+                },
               ),
             ),
             20.h,

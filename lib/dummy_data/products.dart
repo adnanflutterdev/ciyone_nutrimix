@@ -1,7 +1,7 @@
 import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:uuid/uuid.dart';
 
-final List<Product> newProducts = [
+final List<Product> products = [
   // Sports Nutrition/Proteins/Whey Proteins
   //
   Product(

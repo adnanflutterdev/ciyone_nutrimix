@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/wire_frame/build_product_row_wireframe.dart';
+import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/heart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
@@ -8,12 +9,10 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/product/product_detail_screen.dart';
 import 'package:ciyone_nutrimix/views/product/view_all_products.dart';
-import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/providers/products_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
@@ -65,10 +64,6 @@ class BuildProductRow extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   Product product = products[index];
-                  // final off =
-                  //     ((product.discount * 100) /
-                  //             (product.price + product.discount))
-                  //         .ceil();
                   return Padding(
                     padding: const EdgeInsets.only(right: 12.0),
                     child: GestureDetector(
@@ -87,18 +82,17 @@ class BuildProductRow extends ConsumerWidget {
                           padding: const EdgeInsets.all(10.0),
                           child: Consumer(
                             builder: (context, ref, child) {
-                              final myDetails = ref.watch(myDetailsProvider);
+                              final cart = ref.watch(cartProvider);
 
-                              return myDetails.when(
-                                data: (data) {
-                                  List<CartModel> cart = data.cart;
+                              return cart.when(
+                                data: (cart) {
                                   bool isInCart = cart.any(
                                     (element) =>
-                                        element.productId == product.id,
+                                        (element.productId == product.id) &&
+                                        (element.varientIndex == 0),
                                   );
                                   String image =
                                       product.varientImages[0].images[0];
-                                  // print(image);
                                   return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
