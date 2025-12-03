@@ -1,7 +1,7 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/widgets/expand_toggler.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class SummaryDetails extends StatefulWidget {
     required this.products,
     required this.quantityList,
   });
-  final List<NewProductModel> products;
+  final List<Product> products;
   final List<int> quantityList;
 
   @override
@@ -21,7 +21,7 @@ class SummaryDetails extends StatefulWidget {
 class _SummaryDetailsState extends State<SummaryDetails> {
   bool isExpaned = false;
   int quantity = 0;
-  late List<NewProductModel> products;
+  late List<Product> products;
   late List<int> quantityList;
   int sumOfPrices = 0;
   int sumOfDiscount = 0;
@@ -65,10 +65,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                       Row(
                         children: [
                           Text('Order Summary', style: context.titleSmall),
-                          Text(
-                            ' ($quantity item)',
-                            style: context.bodyMedium,
-                          ),
+                          Text(' ($quantity item)', style: context.bodyMedium),
                         ],
                       ),
                       20.h,
@@ -83,7 +80,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                           ),
                           const Spacer(),
                           Text(
-                            '₹${sumOfPrices+sumOfDiscount}',
+                            '₹${sumOfPrices + sumOfDiscount}',
                             style: context.bodyMedium?.copyWith(
                               fontWeight: FontWeight.normal,
                             ),

@@ -1,6 +1,6 @@
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/product/product_detail_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:ciyone_nutrimix/views/widgets/expand_toggler.dart';
@@ -75,10 +75,9 @@ class _VarientImagesState extends State<ProductVarients> {
                                 !snapshot.data!.exists) {
                               return const SizedBox.shrink();
                             }
-                            NewProductModel varientProduct =
-                                NewProductModel.fromJson(
-                                  snapshot.data!.data()!,
-                                );
+                            Product varientProduct = Product.fromJson(
+                              snapshot.data!.data()!,
+                            );
                             return GestureDetector(
                               onTap: () {
                                 AppNavigator.pushReplacement(

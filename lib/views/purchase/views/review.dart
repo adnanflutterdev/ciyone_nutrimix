@@ -2,7 +2,7 @@ import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/widgets/cart_item.dart';
 import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_delivery_details.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class Review extends StatelessWidget {
   const Review({super.key, required this.product});
-  final NewProductModel product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/models/order_model.dart';
 import 'package:ciyone_nutrimix/views/providers/products_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +18,7 @@ final myOrdersProvider = StreamProvider<List<OrderModel>>((ref) {
       );
 });
 
-final getOrderedProducts = Provider<List<List<NewProductModel>>>((ref) {
+final getOrderedProducts = Provider<List<List<Product>>>((ref) {
   final allProducts = ref.watch(productsProvider).value ?? [];
   final myOrders = ref.watch(myOrdersProvider).value ?? [];
 

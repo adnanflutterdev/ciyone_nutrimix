@@ -5,7 +5,7 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/cart_model.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/models/order_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/address_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/cancel_order.dart';
@@ -169,8 +169,7 @@ class OrderDetails extends StatelessWidget {
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemBuilder: (context, index) {
-                                          NewProductModel product =
-                                              products[index];
+                                          Product product = products[index];
                                           CartModel cartItem =
                                               order.cart[index];
                                           VarientImages varientImages =

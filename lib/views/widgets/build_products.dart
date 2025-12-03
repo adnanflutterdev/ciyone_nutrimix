@@ -1,7 +1,7 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/product/product_detail_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_product_details.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class BuildProducts extends StatelessWidget {
     required this.products,
     this.shrinkWrap = false,
   });
-  final List<NewProductModel> products;
+  final List<Product> products;
   final bool shrinkWrap;
 
   @override
@@ -22,7 +22,7 @@ class BuildProducts extends StatelessWidget {
       shrinkWrap: shrinkWrap,
       physics: shrinkWrap ? const NeverScrollableScrollPhysics() : null,
       itemBuilder: (context, index) {
-        NewProductModel product = products[index];
+        Product product = products[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
           child: Stack(
@@ -41,7 +41,7 @@ class BuildProducts extends StatelessWidget {
                       horizontal: 10.0,
                       vertical: 20.0,
                     ),
-                    child: BuildProductDetails( product: product),
+                    child: BuildProductDetails(product: product),
                   ),
                 ),
               ),

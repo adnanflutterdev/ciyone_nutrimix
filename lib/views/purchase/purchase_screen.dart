@@ -3,7 +3,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/widgets/stepper_views.dart';
 import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
@@ -12,8 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PurchaseScreen extends StatefulWidget {
-  const PurchaseScreen({super.key, required this.product,required this.varientIndex});
-  final NewProductModel product;
+  const PurchaseScreen({
+    super.key,
+    required this.product,
+    required this.varientIndex,
+  });
+  final Product product;
   final int varientIndex;
 
   @override
@@ -77,7 +81,10 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                   ).toList(),
                 ),
               ),
-              stepperViews(product: widget.product,varientIndex: widget.varientIndex)[stepperIndex],
+              stepperViews(
+                product: widget.product,
+                varientIndex: widget.varientIndex,
+              )[stepperIndex],
             ],
           ),
         ),

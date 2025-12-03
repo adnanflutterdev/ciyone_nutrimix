@@ -4,7 +4,7 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
 import 'package:ciyone_nutrimix/models/cart_model.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_product_details.dart';
@@ -45,7 +45,7 @@ class BuildCartItem extends ConsumerWidget {
           itemBuilder: (context, index) {
             CartModel cartItem = cart[index];
             print(cartItem.varientIndex);
-            NewProductModel product = cartProducts[index];
+            Product product = cartProducts[index];
             return Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15.0,

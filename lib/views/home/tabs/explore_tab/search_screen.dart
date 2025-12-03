@@ -6,7 +6,7 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/explore_tab/filter_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_products.dart';
@@ -75,25 +75,28 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void priceLowToHigh() {
-    List<NewProductModel> currentList = [...allProducts.value];
+    List<Product> currentList = [...allProducts.value];
     currentList.sort((a, b) => a.pricing.price.compareTo(b.pricing.price));
     allProducts.value = currentList;
   }
 
   void priceHighToLow() {
-    List<NewProductModel> currentList = [...allProducts.value];
+    List<Product> currentList = [...allProducts.value];
     currentList.sort((a, b) => b.pricing.price.compareTo(a.pricing.price));
     allProducts.value = currentList;
   }
 
   void discount() {
-    List<NewProductModel> currentList = [...allProducts.value];
-    currentList.sort((a, b) => b.pricing.discountPercentage.compareTo(a.pricing.discountPercentage));
+    List<Product> currentList = [...allProducts.value];
+    currentList.sort(
+      (a, b) =>
+          b.pricing.discountPercentage.compareTo(a.pricing.discountPercentage),
+    );
     allProducts.value = currentList;
   }
 
   void rating() {
-    List<NewProductModel> currentList = [...allProducts.value];
+    List<Product> currentList = [...allProducts.value];
     currentList.sort((a, b) => b.rating.ratings.compareTo(a.rating.ratings));
     allProducts.value = currentList;
   }
@@ -141,10 +144,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                   15.w,
-                  CustomIcon(AppIcons.cart, size: 22,
-                  onPressed: () {
-                    AppNavigator.push(const CartScreen());
-                  },),
+                  CustomIcon(
+                    AppIcons.cart,
+                    size: 22,
+                    onPressed: () {
+                      AppNavigator.push(const CartScreen());
+                    },
+                  ),
                 ],
               ),
             ),

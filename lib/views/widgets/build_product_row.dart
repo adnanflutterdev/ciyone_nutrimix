@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/wire_frame/build_product_row_wireframe.dart';
 import 'package:ciyone_nutrimix/views/widgets/heart_button.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class BuildProductRow extends ConsumerWidget {
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  NewProductModel product = products[index];
+                  Product product = products[index];
                   // final off =
                   //     ((product.discount * 100) /
                   //             (product.price + product.discount))

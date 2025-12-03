@@ -4,7 +4,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/product/product_detail_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:ciyone_nutrimix/views/widgets/heart_button.dart';
@@ -21,7 +21,7 @@ class BuildProductDetails extends StatelessWidget {
     this.iconSize,
     this.onPressed,
   });
-  final NewProductModel product;
+  final Product product;
   final String? icon;
   final bool showRating;
   final double? iconSize;

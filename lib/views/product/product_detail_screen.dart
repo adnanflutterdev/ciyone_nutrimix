@@ -4,7 +4,7 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/add_new_address.dart';
@@ -23,7 +23,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.product});
-  final NewProductModel product;
+  final Product product;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -192,7 +192,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildProductDetails(
     BuildContext context, {
-    required NewProductModel product,
+    required Product product,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,10 +262,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  Widget _buildVariant(
-    BuildContext context, {
-    required NewProductModel product,
-  }) {
+  Widget _buildVariant(BuildContext context, {required Product product}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -537,7 +534,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildCustomerReviews(
     BuildContext context, {
-    required NewProductModel product,
+    required Product product,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -558,7 +555,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildRatingContainer(
     BuildContext context, {
-    required NewProductModel product,
+    required Product product,
   }) {
     return Container(
       padding: const EdgeInsets.all(13),

@@ -1,5 +1,5 @@
 import 'package:ciyone_nutrimix/models/cart_model.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/providers/products_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,11 +18,11 @@ final cartProvider = StreamProvider<List<CartModel>>((ref) {
       );
 });
 
-final cartProductsProvider = Provider<List<NewProductModel>>((ref) {
+final cartProductsProvider = Provider<List<Product>>((ref) {
   final cart = ref.watch(cartProvider).value;
   final allProducts = ref.watch(productsProvider).value ?? [];
   final List<CartModel> myCart = cart ?? [];
-  final List<NewProductModel> cartProducts = myCart
+  final List<Product> cartProducts = myCart
       .map(
         (cartItem) => allProducts.firstWhere(
           (product) => cartItem.productId == product.id,

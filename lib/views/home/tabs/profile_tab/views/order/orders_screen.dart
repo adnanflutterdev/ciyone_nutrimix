@@ -5,7 +5,7 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/models/order_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/customer_support.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/order_details.dart';
@@ -166,7 +166,7 @@ class OrdersScreen extends StatelessWidget {
                   itemCount: orderedProducts.length,
                   itemBuilder: (context, index) {
                     OrderStatus orderStatus = orders[index].orderStatus;
-                    NewProductModel newProduct = orderedProducts[index][0];
+                    Product newProduct = orderedProducts[index][0];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: GestureDetector(
@@ -244,7 +244,7 @@ class OrdersScreen extends StatelessWidget {
 
   Widget _buildProductDetails(
     BuildContext context, {
-    required NewProductModel product,
+    required Product product,
     required int varientIndex,
     required int noOfProducts,
   }) {

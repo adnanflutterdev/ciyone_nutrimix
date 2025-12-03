@@ -1,11 +1,11 @@
-import 'package:ciyone_nutrimix/dummy_data/new_products.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/dummy_data/products.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> uploadProducts() async {
-  final List<NewProductModel> allProducts = newProducts;
+  final List<Product> allProducts = newProducts;
 
-  for (NewProductModel product in allProducts) {
+  for (Product product in allProducts) {
     await FirebaseFirestore.instance
         .collection('products')
         .doc(product.id)

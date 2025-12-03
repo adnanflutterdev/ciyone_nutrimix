@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:ciyone_nutrimix/dummy_data/products.dart';
 import 'package:ciyone_nutrimix/models/product_model.dart';
+import 'package:flutter/material.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
@@ -12,7 +12,6 @@ import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 class BuildProductRowWireframe extends StatelessWidget {
   const BuildProductRowWireframe({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,9 +22,7 @@ class BuildProductRowWireframe extends StatelessWidget {
             Text('title', style: context.titleSmall),
             const Spacer(),
             TextButton.icon(
-              onPressed: () {
-               
-              },
+              onPressed: () {},
               icon: const CustomIcon(
                 AppIcons.arrowCircleRight,
                 color: AppColors.secondaryIconColor,
@@ -48,11 +45,8 @@ class BuildProductRowWireframe extends StatelessWidget {
             itemCount: 5,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              ProductModel product = dummyProducts[index];
-              final off =
-                  ((product.discount * 100) /
-                          (product.price + product.discount))
-                      .ceil();
+              Product product = newProducts[index];
+              final off = product.pricing.discountPercentage;
               return Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Container(
@@ -83,7 +77,7 @@ class BuildProductRowWireframe extends StatelessWidget {
                         ),
                         const Spacer(flex: 2),
                         Text(
-                          '${product.title}${product.subTitle != null ? ', ${product.subTitle}' : ''}',
+                          product.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: context.bodyMedium,
@@ -92,11 +86,11 @@ class BuildProductRowWireframe extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₹${product.price} ',
+                              '₹${product.pricing.price} ',
                               style: context.bodyLarge,
                             ),
                             Text(
-                              ' ₹${product.price + product.discount} ',
+                              ' ₹${product.pricing.mrp}',
                               style: context.bodyMedium?.copyWith(
                                 color: AppColors.secondaryTextColor,
                                 decoration: TextDecoration.lineThrough,

@@ -3,7 +3,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_products.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
@@ -16,7 +16,7 @@ class ViewAllProducts extends StatelessWidget {
     required this.products,
   });
   final String title;
-  final List<NewProductModel> products;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
