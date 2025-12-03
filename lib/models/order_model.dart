@@ -3,14 +3,18 @@ import 'package:ciyone_nutrimix/models/cart_model.dart';
 
 class OrderModel {
   final String id;
-  final List<CartModel> carts;
+  final String docId;
+  final List<CartModel> cart;
+  final String? reason;
   final OrderStatus orderStatus;
   final String paymentMethod;
   final AddressModel address;
 
   OrderModel({
     required this.id,
-    required this.carts,
+    required this.docId,
+    required this.cart,
+    this.reason,
     required this.orderStatus,
     required this.paymentMethod,
     required this.address,
@@ -19,11 +23,13 @@ class OrderModel {
   factory OrderModel.fromJson(Map<String, dynamic> order) {
     return OrderModel(
       id: order['id'],
-      carts: (order['carts'] as List<dynamic>)
+      docId: order['docId'],
+      cart: (order['carts'] as List<dynamic>)
           .map(
             (cartItem) => CartModel.fromJson(cartItem as Map<String, dynamic>),
           )
           .toList(),
+      reason: order['reason'],
       orderStatus: OrderStatus.fromJson(order['orderStatus']),
       paymentMethod: order['paymentMethod'],
       address: AddressModel.fromJson(order['address']),
@@ -33,10 +39,12 @@ class OrderModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'carts': carts.map((cartItem)=> cartItem.toJson()).toList(),
+      'docId': docId,
+      'carts': cart.map((cartItem) => cartItem.toJson()).toList(),
       'orderStatus': orderStatus.toJson(),
       'paymentMethod': paymentMethod,
       'address': address.toJson(),
+      'reason':reason
     };
   }
 }

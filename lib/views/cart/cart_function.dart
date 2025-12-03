@@ -4,16 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-Future<void> addToCart(BuildContext context, String productId) async {
+Future<void> addToCart(
+  BuildContext context, {
+  required String productId,
+  required int varientIndex,
+}) async {
   try {
+    final docId = DateTime.now().millisecondsSinceEpoch;
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({
-          'cart': FieldValue.arrayUnion([
-            CartModel(productId: productId, quantity: 1).toJson(),
-          ]),
-        });
+        .collection('cart')
+        .doc('$docId')
+        .set(
+          CartModel(
+            docId: '$docId',
+            productId: productId,
+            quantity: 1,
+            varientIndex: varientIndex,
+          ).toJson(),
+        );
     if (!context.mounted) return;
 
     showAppSnackbar(
@@ -32,21 +42,16 @@ Future<void> addToCart(BuildContext context, String productId) async {
 
 Future<void> updateQuantity(
   BuildContext context, {
-  required List<CartModel> cart,
-  required String productId,
+  required String docId,
   required int quantity,
 }) async {
   try {
-    int index = cart.indexWhere((element) => element.productId == productId);
-    cart[index] = CartModel(productId: productId, quantity: quantity);
-    List<Map<String, dynamic>> newCart = cart
-        .map((cartItem) => cartItem.toJson())
-        .toList();
-
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({'cart': newCart});
+        .collection('cart')
+        .doc(docId)
+        .update({'quantity': quantity});
   } on FirebaseException catch (err) {
     if (!context.mounted) return;
     showAppSnackbar(
@@ -59,18 +64,15 @@ Future<void> updateQuantity(
 
 Future<void> removeFromCart(
   BuildContext context, {
-  required String productId,
-  required int quantity,
+  required String docId,
 }) async {
   try {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({
-          'cart': FieldValue.arrayRemove([
-            CartModel(productId: productId, quantity: quantity).toJson(),
-          ]),
-        });
+        .collection('cart')
+        .doc(docId)
+        .delete();
   } on FirebaseException catch (err) {
     if (!context.mounted) return;
     showAppSnackbar(

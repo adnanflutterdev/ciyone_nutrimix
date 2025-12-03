@@ -8,10 +8,15 @@ import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_app_bar.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_text_field.dart';
+import 'package:ciyone_nutrimix/views/widgets/show_app_snackbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CancelOrder extends StatefulWidget {
-  const CancelOrder({super.key});
+  const CancelOrder({super.key, required this.docId});
+  final String docId;
 
   @override
   State<CancelOrder> createState() => _CancelOrderState();
@@ -28,13 +33,14 @@ class _CancelOrderState extends State<CancelOrder> {
     'Others',
   ];
   int selectedIndex = 6;
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Cancel Order',
         actions: [
-           GestureDetector(
+          GestureDetector(
             onTap: () {
               AppNavigator.push(const CustomerSupport());
             },
@@ -115,11 +121,12 @@ class _CancelOrderState extends State<CancelOrder> {
               itemCount: reasons.length,
             ),
             if (selectedIndex == 6)
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: CustomTextField(
                   maxLines: 4,
                   hintText: 'Write your comments',
+                  controller: controller,
                 ),
               ),
           ],
@@ -128,8 +135,31 @@ class _CancelOrderState extends State<CancelOrder> {
       bottomNavigationBar: SafeArea(
         child: PrimaryButton(
           label: 'Cancel Order',
-          onPressed: () {
-            AppNavigator.pop();
+          onPressed: () async {
+            if (selectedIndex == 6 && controller.text.trim().length < 10) {
+              showAppSnackbar(
+                context: context,
+                message: 'Type your reason(min 10 characters)',
+              );
+            } else {
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection('myOrders')
+                  .doc(widget.docId)
+                  .update({
+                    'orderStatus.cancelled': true,
+                    'reason': selectedIndex == 6
+                        ? controller.text.trim()
+                        : reasons[selectedIndex],
+                  });
+              if (!context.mounted) return;
+              showAppSnackbar(
+                context: context,
+                message: 'Your order has been cancelled',
+              );
+              AppNavigator.pop();
+            }
           },
           fontSize: 14,
           borderRadius: 0,

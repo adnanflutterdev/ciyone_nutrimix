@@ -32,35 +32,37 @@ class OrderSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String time = getCurrentDateTime();
+    String orderDate = getCurrentDateTime();
+    String deliveryDate = getDateTimeAfter(3);
+    String docId = '${Timestamp.now().microsecondsSinceEpoch}';
 
     void updateOrders() async {
       OrderModel orderModel = OrderModel(
         id: const Uuid().v4(),
-        carts: cart,
+        docId: docId,
+        cart: cart,
         orderStatus: OrderStatus(
-          orderDate: time,
+          orderDate: orderDate,
           packaged: false,
           shipped: false,
-          deliveryDate: getDateTimeAfter(3),
           delivered: false,
           cancelled: false,
+          deliveryDate: deliveryDate,
         ),
         paymentMethod: isCashOnDelivery ? 'Cash on Delivery' : 'Razorpay',
         address: address,
       );
       quantity.value = 1;
 
-      print(orderModel.toJson());
       DocumentReference ref = FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid);
-      await ref
-          .collection('myOrders')
-          .doc('${Timestamp.now().microsecondsSinceEpoch}')
-          .set(orderModel.toJson());
+      await ref.collection('myOrders').doc(docId).set(orderModel.toJson());
       if (wasFromCart) {
-        ref.update({'cart': []});
+        final snapshot = await ref.collection('cart').get();
+        for (final doc in snapshot.docs) {
+          await doc.reference.delete();
+        }
       }
     }
 
@@ -104,7 +106,7 @@ class OrderSuccessScreen extends StatelessWidget {
                   ),
                 ),
                 const Text('Your order is placed successfully'),
-                Text('On  $time'),
+                Text('On  $orderDate'),
               ],
             ),
           ),

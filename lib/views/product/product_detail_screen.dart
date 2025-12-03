@@ -4,13 +4,13 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/models/new_product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/add_new_address.dart';
 import 'package:ciyone_nutrimix/views/product/product_varient_images.dart';
 import 'package:ciyone_nutrimix/views/product/product_varients.dart';
+import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
 import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/purchase/purchase_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/home_tab/widgets/home_products.dart';
@@ -112,48 +112,50 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           child: Row(
             children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final myDetails = ref.watch(myDetailsProvider);
-                  return myDetails.when(
-                    error: (error, stackTrace) => Text(
-                      'Add to Cart',
-                      style: context.bodyLarge?.copyWith(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    loading: () => Text(
-                      'Add to Cart',
-                      style: context.bodyLarge?.copyWith(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    data: (data) {
-                      List<CartModel> cart = data.cart;
-                      bool isInCart = cart.any(
-                        (element) => element.productId == widget.product.id,
-                      );
-                      return GestureDetector(
-                        onTap: isInCart
-                            ? () {
-                                AppNavigator.push(const CartScreen());
-                              }
-                            : () async {
-                                await addToCart(context, widget.product.id);
-                              },
-                        child: SizedBox(
-                          width: ScreenSize.width / 2,
-                          child: Center(
-                            child: Text(
-                              '${isInCart ? 'Go' : 'Add'} to Cart',
-                              style: context.bodyLarge?.copyWith(
-                                color: isInCart
-                                    ? AppColors.primaryTextColor
-                                    : AppColors.primary,
+              ValueListenableBuilder(
+                valueListenable: productVarientIndex,
+                builder: (context, value, child) {
+                  return Consumer(
+                    builder: (context, ref, child) {
+                      final cart = ref.watch(cartProvider);
+                      return cart.when(
+                        error: (error, stackTrace) =>
+                            Text('Add to Cart', style: context.bodyLarge),
+                        loading: () =>
+                            Text('Add to Cart', style: context.bodyLarge),
+                        data: (cart) {
+                          bool isInCart = cart.any(
+                            (element) =>
+                                (element.productId == widget.product.id) &&
+                                (element.varientIndex == value),
+                          );
+                          return GestureDetector(
+                            onTap: isInCart
+                                ? () {
+                                    AppNavigator.push(const CartScreen());
+                                  }
+                                : () async {
+                                    await addToCart(
+                                      context,
+                                      productId: widget.product.id,
+                                      varientIndex: productVarientIndex.value,
+                                    );
+                                  },
+                            child: SizedBox(
+                              width: ScreenSize.width / 2,
+                              child: Center(
+                                child: Text(
+                                  '${isInCart ? 'Go' : 'Add'} to Cart',
+                                  style: context.bodyLarge?.copyWith(
+                                    color: isInCart
+                                        ? AppColors.primaryTextColor
+                                        : AppColors.primary,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       );
                     },
                   );
@@ -161,7 +163,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  AppNavigator.push(PurchaseScreen(product: widget.product));
+                  AppNavigator.push(
+                    PurchaseScreen(
+                      product: widget.product,
+                      varientIndex: productVarientIndex.value,
+                    ),
+                  );
                 },
                 child: Container(
                   color: AppColors.primary,
@@ -264,24 +271,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       children: [
         Text('Select Variant', style: context.bodyLarge),
         8.h,
-        // BorderedContainer(
-        //   child: Row(
-        //     children: [
-        //       Text(
-        //         '${product.currentVarient.label}:  ',
-        //         style: context.bodyLarge?.copyWith(
-        //           color: AppColors.secondaryTextColor,
-        //         ),
-        //       ),
-        //       Text(
-        //         product.currentVarient.value,
-        //         style: context.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-        //       ),
-        //       const Spacer(),
-        //       const CustomIcon(AppIcons.arrowForward),
-        //     ],
-        //   ),
-        // ),
         ProductVarients(
           currentVarient: product.currentVarient,
           varientProducts: product.varientProducts,

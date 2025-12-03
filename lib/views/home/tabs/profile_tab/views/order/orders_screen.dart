@@ -1,16 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/dummy_data/products.dart';
-import 'package:ciyone_nutrimix/models/product_model.dart';
+import 'package:ciyone_nutrimix/models/new_product_model.dart';
+import 'package:ciyone_nutrimix/models/order_model.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/customer_support.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/order/order_details.dart';
+import 'package:ciyone_nutrimix/views/providers/my_orders_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_app_bar.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
@@ -146,141 +149,221 @@ class OrdersScreen extends StatelessWidget {
   }
 
   Widget _buildOrders(BuildContext context) {
-    List<String> labels = ['Ordered', 'Shipped'];
     return Expanded(
       child: Padding(
         padding: const EdgeInsetsGeometry.all(15),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            ProductModel product = dummyProducts[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: GestureDetector(
-                onTap: () {
-                  AppNavigator.push(OrderDetails(product: product));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.borderColor),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        color: AppColors.borderColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+        child: Consumer(
+          builder: (context, ref, child) {
+            final myOrders = ref.watch(myOrdersProvider);
+
+            final orderedProducts = ref.watch(getOrderedProducts);
+            return myOrders.when(
+              data: (orders) {
+                if (orders.isEmpty) {
+                  return const Center(child: Text('No Orders Yet'));
+                }
+                return ListView.builder(
+                  itemCount: orderedProducts.length,
+                  itemBuilder: (context, index) {
+                    OrderStatus orderStatus = orders[index].orderStatus;
+                    NewProductModel newProduct = orderedProducts[index][0];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          AppNavigator.push(OrderDetails(orderIndex: index));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.borderColor),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'Order ID',
-                                    style: context.bodyMedium?.copyWith(
-                                      color: AppColors.secondaryTextColor,
-                                    ),
+                              Container(
+                                color: AppColors.borderColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: .start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Order ID',
+                                            style: context.bodyMedium?.copyWith(
+                                              color:
+                                                  AppColors.secondaryTextColor,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Text(
+                                            orderStatus.orderDate,
+                                            style: context.bodyMedium?.copyWith(
+                                              color:
+                                                  AppColors.secondaryTextColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      Text(
+                                        '${orders[index].id.substring(0, 8)}......${orders[index].id.substring(28, 36)}',
+                                      ),
+                                    ],
                                   ),
-                                  const Spacer(),
-                                  Text(
-                                    'Tue, 21 Feb 2025',
-                                    style: context.bodyMedium?.copyWith(
-                                      color: AppColors.secondaryTextColor,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  const Text('Hka-48338-71309388'),
-                                  const Spacer(),
-                                  Text('₹${product.price}'),
-                                ],
+                              _buildProductDetails(
+                                context,
+                                product: newProduct,
+                                noOfProducts: orderedProducts[index].length,
+                                varientIndex:
+                                    orders[index].cart[0].varientIndex,
+                              ),
+                              _buildStatusChip(
+                                context,
+                                orderStatus: orderStatus,
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          children: [
-                            Image.asset(product.image, height: 85),
-                            20.w,
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product.title,
-                                    style: context.bodyMedium,
-                                  ),
-                                  Text(
-                                    product.subTitle ?? '',
-                                    style: context.bodySmall?.copyWith(
-                                      color: AppColors.secondaryTextColor,
-                                    ),
-                                  ),
-                                  10.h,
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'View Details',
-                                        style: context.bodyMedium?.copyWith(
-                                          color: AppColors.highlightTextColor,
-                                        ),
-                                      ),
-                                      10.w,
-                                      const CustomIcon(
-                                        AppIcons.arrowCircleRight,
-                                        size: 14,
-                                        color: AppColors.highlightTextColor,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: .end,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: index % 2 == 0
-                                  ? AppColors.secondaryChipColor
-                                  : AppColors.tertiaryChipColor,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                bottomRight: Radius.circular(6),
-                              ),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical: 5,
-                            ),
-                            child: Text(
-                              labels[index],
-                              style: context.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: index % 2 == 0
-                                    ? AppColors.secondaryChipTextColor
-                                    : AppColors.tertiaryChipTextColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  },
+                );
+              },
+              error: (error, stackTrace) => const SizedBox.shrink(),
+              loading: () => const Center(child: CircularProgressIndicator()),
             );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildProductDetails(
+    BuildContext context, {
+    required NewProductModel product,
+    required int varientIndex,
+    required int noOfProducts,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Row(
+        children: [
+          CachedNetworkImage(
+            imageUrl: product.varientImages[varientIndex].images[0],
+            width: 92,
+            height: 92,
+            placeholder: (context, url) => const Center(
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+          20.w,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.title, style: context.bodyMedium),
+                RichText(
+                  text: TextSpan(
+                    text: product.currentVarient.value,
+                    style: context.bodySmall?.copyWith(
+                      color: AppColors.secondaryTextColor,
+                    ),
+                    children: [
+                      const TextSpan(text: ' '),
+                      TextSpan(text: product.varientImages[0].value),
+                    ],
+                  ),
+                ),
+
+                10.h,
+                Row(
+                  children: [
+                    Text(
+                      'View Details',
+                      style: context.bodyMedium?.copyWith(
+                        color: AppColors.highlightTextColor,
+                      ),
+                    ),
+                    10.w,
+                    const CustomIcon(
+                      AppIcons.arrowCircleRight,
+                      size: 14,
+                      color: AppColors.highlightTextColor,
+                    ),
+                    15.w,
+                    if (noOfProducts > 1)
+                      Text(
+                        '+${noOfProducts - 1}',
+                        style: context.bodyLarge?.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusChip(
+    BuildContext context, {
+    required OrderStatus orderStatus,
+  }) {
+    String label = 'Ordered';
+    Color chipColor = AppColors.secondaryChipColor;
+    Color textColor = AppColors.secondaryChipTextColor;
+
+    if (orderStatus.cancelled) {
+      label = 'Cancelled';
+      chipColor = AppColors.highlightTextColor.withValues(alpha: 0.3);
+      textColor = AppColors.error;
+    } else if (orderStatus.delivered) {
+      label = 'Delivered';
+      chipColor = AppColors.primary.withValues(alpha: 0.3);
+      textColor = AppColors.primary;
+    } else if (orderStatus.shipped) {
+      label = 'Shipped';
+      chipColor = AppColors.tertiaryChipColor;
+      textColor = AppColors.tertiaryChipTextColor;
+    } else if (orderStatus.packaged) {
+      label = 'Packaged';
+      chipColor = AppColors.chipColor;
+      textColor = AppColors.hintTextColor;
+    }
+
+    return Row(
+      mainAxisAlignment: .end,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: chipColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(6),
+              bottomRight: Radius.circular(6),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          child: Text(
+            label,
+            style: context.bodySmall?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -7,7 +7,6 @@ import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/models/new_product_model.dart';
 import 'package:ciyone_nutrimix/views/cart/cart_function.dart';
 import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
-import 'package:ciyone_nutrimix/views/providers/my_details_provider.dart';
 import 'package:ciyone_nutrimix/views/widgets/build_product_details.dart';
 import 'package:ciyone_nutrimix/views/widgets/buttons.dart';
 import 'package:ciyone_nutrimix/views/widgets/custom_alert_dialog.dart';
@@ -20,29 +19,24 @@ class BuildCartItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void productRemoveDialog(CartModel cartItem) {
+    void productRemoveDialog(String docId) {
       customAlertDialog(
         context,
         title: 'Remove product from cart',
         content: 'Are you sure to remove this product from your cart',
         action: 'Remove',
         actionFunction: () async {
-          await removeFromCart(
-            context,
-            productId: cartItem.productId,
-            quantity: cartItem.quantity,
-          );
+          await removeFromCart(context, docId: docId);
           AppNavigator.pop();
         },
       );
     }
 
-    final myDetails = ref.watch(myDetailsProvider);
+    final cart = ref.watch(cartProvider);
     final cartProducts = ref.watch(cartProductsProvider);
 
-    return myDetails.when(
-      data: (data) {
-        List<CartModel> cart = data.cart;
+    return cart.when(
+      data: (cart) {
         if (cart.isEmpty) {
           return const Center(child: Text('Your Cart Is Empty...'));
         }
@@ -50,6 +44,7 @@ class BuildCartItem extends ConsumerWidget {
           itemCount: cartProducts.length,
           itemBuilder: (context, index) {
             CartModel cartItem = cart[index];
+            print(cartItem.varientIndex);
             NewProductModel product = cartProducts[index];
             return Padding(
               padding: const EdgeInsets.symmetric(
@@ -67,6 +62,7 @@ class BuildCartItem extends ConsumerWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: BuildProductDetails(
                         product: product,
+                        varientIndex: cartItem.varientIndex,
                         showRating: false,
                         icon: null,
                       ),
@@ -88,12 +84,11 @@ class BuildCartItem extends ConsumerWidget {
                                 ? () async {
                                     await updateQuantity(
                                       context,
-                                      cart: cart,
-                                      productId: cartItem.productId,
+                                      docId: cartItem.docId,
                                       quantity: cartItem.quantity - 1,
                                     );
                                   }
-                                : () => productRemoveDialog(cartItem),
+                                : () => productRemoveDialog(cartItem.docId),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -114,8 +109,7 @@ class BuildCartItem extends ConsumerWidget {
                             onPressed: () async {
                               await updateQuantity(
                                 context,
-                                cart: cart,
-                                productId: cartItem.productId,
+                                docId: cartItem.docId,
                                 quantity: cartItem.quantity + 1,
                               );
                             },
@@ -125,7 +119,8 @@ class BuildCartItem extends ConsumerWidget {
                             height: 35,
                             child: PrimaryButton(
                               label: 'Remove',
-                              onPressed: () => productRemoveDialog(cartItem),
+                              onPressed: () =>
+                                  productRemoveDialog(cartItem.docId),
                               fontSize: 12,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,

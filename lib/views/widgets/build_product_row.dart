@@ -209,7 +209,8 @@ class BuildProductRow extends ConsumerWidget {
                                             : () async {
                                                 await addToCart(
                                                   context,
-                                                  product.id,
+                                                  productId: product.id,
+                                                  varientIndex: 0,
                                                 );
                                               },
                                         fontSize: 14,

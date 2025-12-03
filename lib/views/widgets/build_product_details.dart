@@ -17,6 +17,7 @@ class BuildProductDetails extends StatelessWidget {
     required this.product,
     this.icon = AppIcons.heart,
     this.showRating = true,
+    this.varientIndex = 0,
     this.iconSize,
     this.onPressed,
   });
@@ -24,6 +25,7 @@ class BuildProductDetails extends StatelessWidget {
   final String? icon;
   final bool showRating;
   final double? iconSize;
+  final int varientIndex;
   final Function()? onPressed;
 
   @override
@@ -36,7 +38,7 @@ class BuildProductDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CachedNetworkImage(
-            imageUrl: product.varientImages[0].images[0],
+            imageUrl: product.varientImages[varientIndex].images[0],
             width: 90,
             height: 90,
             placeholder: (context, url) => const Center(

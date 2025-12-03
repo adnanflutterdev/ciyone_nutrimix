@@ -15,11 +15,6 @@ class AppColors {
   static const Color secondaryChipTextColor = Color(0xff00A755);
   static const Color tertiaryChipTextColor = Color(0xffF2B007);
 
-  // Button Colors
-  // static const Color paymentButtonColor = Color(0xff1252F2);
-  // static const Color primaryButtonColor = Color(0xff78C9E4);
-  // static const Color secondaryButtonColor = Color(0xffFFFFFF);
-  // static const Color wireframeButtonColor = Color(0xff292D32);
 
   // Icons Colors
   static const Color primaryIconColor = Color(0xff292D32);

@@ -7,12 +7,12 @@ import 'package:ciyone_nutrimix/views/purchase/views/address.dart';
 import 'package:ciyone_nutrimix/views/purchase/views/place_order.dart';
 import 'package:ciyone_nutrimix/core/global_notifier/quantity_notifier.dart';
 
-List<Widget> stepperViews({required NewProductModel product}) => [
+List<Widget> stepperViews({required NewProductModel product,required int varientIndex}) => [
   Review(product: product),
   const Expanded(child: Address()),
   PlaceOrder(product: product),
   Payment(
     amount: product.pricing.price * quantity.value,
-    cart: [CartModel(productId: product.id, quantity: quantity.value)],
+    cart: [CartModel(docId: '${DateTime.now().millisecondsSinceEpoch}',productId: product.id, quantity: quantity.value,varientIndex: varientIndex)],
   ),
 ];

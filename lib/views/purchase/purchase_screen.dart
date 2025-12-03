@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PurchaseScreen extends StatefulWidget {
-  const PurchaseScreen({super.key, required this.product});
+  const PurchaseScreen({super.key, required this.product,required this.varientIndex});
   final NewProductModel product;
+  final int varientIndex;
 
   @override
   State<PurchaseScreen> createState() => _PurchaseScreenState();
@@ -76,7 +77,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                   ).toList(),
                 ),
               ),
-              stepperViews(product: widget.product)[stepperIndex],
+              stepperViews(product: widget.product,varientIndex: widget.varientIndex)[stepperIndex],
             ],
           ),
         ),

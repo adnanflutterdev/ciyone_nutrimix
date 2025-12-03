@@ -35,7 +35,12 @@ class ViewAllProducts extends StatelessWidget {
               title,
               style: context.titleSmall?.copyWith(fontFamily: 'PoppinsBold'),
             ),
-            Text(' (${products.length} items)', style: context.bodyMedium),
+            Expanded(
+              child: Text(
+                ' (${products.length} items)',
+                style: context.bodyMedium,
+              ),
+            ),
           ],
         ),
 

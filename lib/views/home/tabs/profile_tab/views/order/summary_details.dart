@@ -1,13 +1,18 @@
 import 'package:ciyone_nutrimix/core/constants/app_colors.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/product_model.dart';
+import 'package:ciyone_nutrimix/models/new_product_model.dart';
 import 'package:ciyone_nutrimix/views/widgets/expand_toggler.dart';
 import 'package:flutter/material.dart';
 
 class SummaryDetails extends StatefulWidget {
-  const SummaryDetails({super.key, required this.product});
-  final ProductModel product;
+  const SummaryDetails({
+    super.key,
+    required this.products,
+    required this.quantityList,
+  });
+  final List<NewProductModel> products;
+  final List<int> quantityList;
 
   @override
   State<SummaryDetails> createState() => _SummaryDetailsState();
@@ -15,20 +20,39 @@ class SummaryDetails extends StatefulWidget {
 
 class _SummaryDetailsState extends State<SummaryDetails> {
   bool isExpaned = false;
+  int quantity = 0;
+  late List<NewProductModel> products;
+  late List<int> quantityList;
+  int sumOfPrices = 0;
+  int sumOfDiscount = 0;
 
-  final int value = 1;
+  @override
+  void initState() {
+    super.initState();
+    products = widget.products;
+    quantityList = widget.quantityList;
+    for (int x = 0; x < products.length; x++) {
+      sumOfPrices += products[x].pricing.price.toInt() * quantityList[x];
+      sumOfDiscount +=
+          (products[x].pricing.mrp - products[x].pricing.price).toInt() *
+          quantityList[x];
+    }
+    for (int x in quantityList) {
+      quantity += x;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    ProductModel product = widget.product;
     return Column(
       children: [
         ExpandToggler(
-          value: ' ₹${product.price}',
+          value: '₹$sumOfPrices',
           onChanged: (value) {
             isExpaned = value;
             setState(() {});
           },
-          title: 'Cash On Delivery',
+          title: 'Cash On Delivery ',
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
@@ -41,7 +65,10 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                       Row(
                         children: [
                           Text('Order Summary', style: context.titleSmall),
-                          Text(' ($value item)', style: context.bodyMedium),
+                          Text(
+                            ' ($quantity item)',
+                            style: context.bodyMedium,
+                          ),
                         ],
                       ),
                       20.h,
@@ -56,7 +83,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                           ),
                           const Spacer(),
                           Text(
-                            '₹${value * (product.price + product.discount)}',
+                            '₹${sumOfPrices+sumOfDiscount}',
                             style: context.bodyMedium?.copyWith(
                               fontWeight: FontWeight.normal,
                             ),
@@ -93,7 +120,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                           ),
                           const Spacer(),
                           Text(
-                            '-₹${value * product.discount}',
+                            '-₹$sumOfDiscount',
                             style: context.bodyMedium?.copyWith(
                               fontWeight: FontWeight.normal,
                               color: AppColors.success,
@@ -112,7 +139,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                             Text('Payable Amount', style: context.bodyLarge),
                             const Spacer(),
                             Text(
-                              '₹${value * product.price}',
+                              '₹$sumOfPrices',
                               style: context.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

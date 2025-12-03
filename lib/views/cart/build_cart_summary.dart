@@ -3,7 +3,6 @@ import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/screen_size.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
-import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/views/cart/check_out_screen.dart';
 import 'package:ciyone_nutrimix/views/home/tabs/profile_tab/views/address/address_screen.dart';
 import 'package:ciyone_nutrimix/views/providers/cart_provider.dart';
@@ -66,11 +65,10 @@ class _BuildCartSummaryState extends State<BuildCartSummary> {
               padding: const EdgeInsets.all(20.0),
               child: Consumer(
                 builder: (context, ref, child) {
-                  final myDetails = ref.watch(myDetailsProvider);
+                  final cart = ref.watch(cartProvider);
                   final cartProducts = ref.watch(cartProductsProvider);
-                  return myDetails.when(
-                    data: (data) {
-                      List<CartModel> cart = data.cart;
+                  return cart.when(
+                    data: (cart) {
                       int sumOfPrices = 0;
                       int sumOfDiscount = 0;
                       for (int x = 0; x < cartProducts.length; x++) {
@@ -181,30 +179,44 @@ class _BuildCartSummaryState extends State<BuildCartSummary> {
                             ),
                           ),
                           10.h,
-                          if (data.cart.isNotEmpty)
-                            PaymentButton(
-                              label: 'Checkout',
-                              color: data.addressIndex < 0
-                                  ? AppColors.stepperActiveColor.withValues(
-                                      alpha: 0.4,
-                                    )
-                                  : null,
-                              onPressed: data.addressIndex < 0
-                                  ? () {
-                                      showAppSnackbar(
-                                        context: context,
-                                        message: 'Add delivery address first',
-                                      );
-                                      AppNavigator.push(const AddressScreen());
-                                    }
-                                  : () {
-                                      AppNavigator.push(
-                                        CheckOutScreen(
-                                          amount: sumOfPrices,
-                                          cart: cart,
-                                        ),
-                                      );
-                                    },
+                          if (cart.isNotEmpty)
+                            Consumer(
+                              builder: (context, ref, child) {
+                                final myDetails = ref.watch(myDetailsProvider);
+                                return myDetails.when(
+                                  data: (data) {
+                                    return PaymentButton(
+                                      label: 'Checkout',
+                                      color: data.addressIndex < 0
+                                          ? AppColors.stepperActiveColor
+                                                .withValues(alpha: 0.4)
+                                          : null,
+                                      onPressed: data.addressIndex < 0
+                                          ? () {
+                                              showAppSnackbar(
+                                                context: context,
+                                                message:
+                                                    'Add delivery address first',
+                                              );
+                                              AppNavigator.push(
+                                                const AddressScreen(),
+                                              );
+                                            }
+                                          : () {
+                                              AppNavigator.push(
+                                                CheckOutScreen(
+                                                  amount: sumOfPrices,
+                                                  cart: cart,
+                                                ),
+                                              );
+                                            },
+                                    );
+                                  },
+                                  error: (error, stackTrace) =>
+                                      const SizedBox.shrink(),
+                                  loading: () => const SizedBox.shrink(),
+                                );
+                              },
                             ),
                         ],
                       );
