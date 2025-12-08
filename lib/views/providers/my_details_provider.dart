@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final myDetailsProvider = StreamProvider<UserModel>((ref) {
   return FirebaseFirestore.instance
       .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .doc(FirebaseAuth.instance.currentUser?.uid)
       .snapshots()
       .map((user) => UserModel.fromJson(user.data()!));
 });
