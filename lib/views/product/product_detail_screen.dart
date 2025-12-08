@@ -214,7 +214,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const Spacer(flex: 4),
+            20.w,
             Text(
               '${product.pricing.discountPercentage}% off',
               style: context.bodySmall?.copyWith(
@@ -222,7 +222,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const Spacer(),
           ],
         ),
         Text('Inclusive all taxes', style: context.bodySmall),

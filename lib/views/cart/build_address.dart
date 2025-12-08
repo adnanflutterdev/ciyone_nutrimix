@@ -108,7 +108,7 @@ class BuildAddress extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
-                        myAddress.addressType,
+                        myAddress.addressType.split(' ').first,
                         style: context.bodyMedium,
                       ),
                     ),

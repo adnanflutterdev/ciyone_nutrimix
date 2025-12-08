@@ -4,6 +4,7 @@ import 'package:ciyone_nutrimix/core/constants/app_icons.dart';
 import 'package:ciyone_nutrimix/core/utils/app_navigator.dart';
 import 'package:ciyone_nutrimix/core/utils/sized_box_extension.dart';
 import 'package:ciyone_nutrimix/core/utils/theme_extension.dart';
+import 'package:ciyone_nutrimix/models/address_model.dart';
 import 'package:ciyone_nutrimix/models/cart_model.dart';
 import 'package:ciyone_nutrimix/models/product_model.dart';
 import 'package:ciyone_nutrimix/models/order_model.dart';
@@ -67,6 +68,7 @@ class OrderDetails extends StatelessWidget {
               data: (orders) {
                 OrderModel order = orders[orderIndex];
                 OrderStatus orderStatus = order.orderStatus;
+                AddressModel address = order.address;
                 int stepperIndex = 0;
                 if (orderStatus.delivered) {
                   stepperIndex = 3;
@@ -296,11 +298,11 @@ class OrderDetails extends StatelessWidget {
                               ],
                             ),
                             10.h,
-                            const CustomTextField(
+                            CustomTextField(
                               readOnly: true,
                               maxLines: 3,
                               hintText:
-                                  'Ground floor, Teepeyem Enclave, Kaloor - Kadavanthara Rd, opp. Gokul Oottupura, Kochi, Kerala 682020',
+                                  '${address.address}, ${address.city}, ${address.state} ${address.pincode}',
                             ),
                             45.h,
                             if (!orderStatus.cancelled)

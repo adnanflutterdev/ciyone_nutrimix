@@ -81,7 +81,7 @@ class Review extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '₹${value * (product.pricing.price)}',
+                  '₹${value * (product.pricing.mrp)}',
                   style: context.bodyMedium?.copyWith(
                     fontWeight: FontWeight.normal,
                   ),

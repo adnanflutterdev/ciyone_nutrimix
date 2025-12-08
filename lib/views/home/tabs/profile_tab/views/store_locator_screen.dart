@@ -95,7 +95,7 @@ class StoreLocatorScreen extends StatelessWidget {
             15.h,
             CustomTextField(
               hintText: 'Tirunelveli',
-              hintStyle: context.bodyLarge,
+              hintStyle: context.bodyLarge?.copyWith(color: AppColors.secondaryTextColor),
             ),
             40.h,
             Row(
